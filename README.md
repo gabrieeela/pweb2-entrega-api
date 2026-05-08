@@ -1,4 +1,4 @@
-# El Patio Vegan API 🌿
+# El Patio Vegan API
 
 API REST para gestionar el carrito de compras de **El Patio Vegan**, una cafetería vegana ubicada en la localidad de Ramos Mejía, Buenos Aires. 
 Su especialización es la pastelería, ya que ofrecen opciones aptas para veganos y celíacos.
