@@ -47,17 +47,14 @@ Se eligió Flask sobre alternativas como FastAPI o Django REST Framework por su 
  
 ### 1. Estado compartido entre módulos en Python
  
-**Problema:** al importar `cart` directamente con `from .data import cart`, cada módulo obtenía una **copia local** de la lista. Las modificaciones en un módulo no se reflejaban en los demás, y los tests no podían limpiar el estado correctamente entre ejecuciones.
- 
-**Solución:** importar el módulo completo (`from .. import data`) y referenciar siempre `data.cart`. De esta forma, todos los módulos apuntan a la misma referencia en memoria y los cambios se propagan correctamente.
+Al importar `cart` directamente con `from .data import cart`, cada módulo obtenía una copia local de la lista, ya que las modificaciones en un módulo no se reflejaban en los demás y los tests no podían limpiar el estado correctamente entre ejecuciones. Para arreglarlo se importó el módulo completo (`from .. import data`) para despues referenciar siempre `data.cart`, así todos los módulos apuntan a la misma referencia en memoria y los cambios se propagan correctamente.
  
 ---
  
 ### 2. Tests que se afectaban entre sí
  
-**Problema:** al correr la suite completa de tests, algunos fallaban dependiendo del orden de ejecución porque el carrito conservaba ítems de tests anteriores.
- 
-**Solución:** agregar `data.cart.clear()` dentro del fixture `client` de pytest, que se ejecuta antes de cada test individual. Esto garantiza que cada test parte de un carrito vacío, sin importar qué haya ocurrido antes.
+Al correr la suite completa de tests, algunos fallaban dependiendo del orden de ejecución porque el carrito conservaba ítems de tests anteriores.
+Para arreglarlo se agregó `data.cart.clear()` dentro del fixture `client` de pytest, que se ejecuta antes de cada test individual. Esto garantiza que cada test parte de un carrito vacío, sin importar qué haya ocurrido antes.
  
 ```python
 @pytest.fixture
@@ -71,7 +68,7 @@ def client():
 
 ---
  
- 
+
 ## Cómo ejecutar el proyecto
  
 ### Instalación
