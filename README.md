@@ -3,6 +3,7 @@
 API REST para gestionar el carrito de compras de **El Patio Vegan**, una cafetería vegana ubicada en la localidad de Ramos Mejía, Buenos Aires. 
 Su especialización es la pastelería, ya que ofrecen opciones aptas para veganos y celíacos.
 
+
 ## Arquitectura elegida
  
 Se adoptó una arquitectura **cliente-servidor en capas**, organizando el backend en tres niveles bien diferenciados:
@@ -11,23 +12,6 @@ Se adoptó una arquitectura **cliente-servidor en capas**, organizando el backen
 - **Capa de datos:** el módulo `data.py` centraliza la persistencia en memoria, exponiendo las estructuras `PRODUCTS` (catálogo de productos que contienen su nombre, descripción, precio, id, y si es o no libre de gluten) y `cart` (carrito de compras activo).
 - **Capa de aplicación:** `app/__init__.py` implementa el patrón **Application Factory**, que instancia Flask, registra los Blueprints y configura Swagger en un único punto de entrada controlado.
 
-### Estructura del proyecto
- 
-```
-entrega/
-├── app/
-│   ├── __init__.py       # Application Factory + configuración Swagger
-│   ├── data.py           # Persistencia en memoria (productos y carrito)
-│   └── routes/
-│       ├── products.py   # Endpoints GET /api/products
-│       └── cart.py       # Endpoints GET/POST/DELETE /api/cart
-├── tests/
-│   └── test_api.py       # 25 tests unitarios con pytest
-├── run.py                # Punto de entrada del servidor
-├── requirements.txt
-└── README.md
-```
- 
 ### Endpoints disponibles
  
 | Método   | URL                          | Descripción                                 |
@@ -44,6 +28,7 @@ entrega/
  
 ---
  
+
 ## Tecnologías utilizadas
  
 | Tecnología | Versión | Rol |
@@ -57,6 +42,7 @@ Se eligió Flask sobre alternativas como FastAPI o Django REST Framework por su 
  
 ---
  
+
 ## Dificultades encontradas y cómo se resolvieron
  
 ### 1. Estado compartido entre módulos en Python
@@ -85,6 +71,7 @@ def client():
 
 ---
  
+ 
 ## Cómo ejecutar el proyecto
  
 ### Instalación
@@ -109,31 +96,5 @@ La documentación Swagger está disponible en `http://localhost:5000/docs/`
 ```bash
 pytest tests/ -v
 ```
- 
-Resultado esperado: **25 tests passed**
- 
 ---
  
-## Ejemplo de uso con curl (PowerShell)
- 
-```powershell
-# Ver todos los productos
-curl http://localhost:5000/api/products
- 
-# Agregar una torta al carrito
-curl -Method POST http://localhost:5000/api/cart `
-  -ContentType "application/json" `
-  -Body '{"product_id": 1, "quantity": 2}'
- 
-# Ver el carrito
-curl http://localhost:5000/api/cart
- 
-# Ver el total
-curl http://localhost:5000/api/cart/total
- 
-# Eliminar un producto
-curl -Method DELETE http://localhost:5000/api/cart/1
- 
-# Vaciar el carrito
-curl -Method DELETE http://localhost:5000/api/cart
-```
